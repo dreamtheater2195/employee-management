@@ -1,10 +1,10 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 export const EMPLOYEE_UPDATE = 'EMPLOYEE_UPDATE';
-export const EMPLOYEE_CREATE = 'EMPLOYEE_CREATE';
+export const EMPLOYEE_CREATE_SUCCESS = 'EMPLOYEE_CREATE_SUCCESS';
 export const EMPLOYEES_FETCH_SUCCESS = 'EMPLOYEES_FETCH_SUCCESS';
 export const EMPLOYEE_SAVE_SUCCESS = 'EMPLOYEE_SAVE_SUCCESS';
-
+export const EMPLOYEE_DELETE_SUCCESS = 'EMPLOYEE_DELETE_SUCCESS';
 export const employeeUpdate = ({ prop, value }) => {
     return {
         type: EMPLOYEE_UPDATE,
@@ -42,4 +42,13 @@ export const employeesFetch = () => dispatch => {
         .on('value', snapshot => {
             dispatch({ type: EMPLOYEES_FETCH_SUCCESS, payload: snapshot.val() })
         });
+}
+
+export const employeeDelete = ({ uid }) => dispatch => {
+    const { currentUser } = firebase.auth();
+    firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+        .remove()
+        .then(() => {
+            Actions.pop();
+        })
 }
