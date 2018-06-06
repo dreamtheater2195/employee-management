@@ -1,4 +1,4 @@
-import { EMPLOYEE_UPDATE, EMPLOYEE_CREATE } from '../actions';
+import { EMPLOYEE_UPDATE, EMPLOYEE_CREATE, EMPLOYEE_SAVE_SUCCESS } from '../actions';
 
 const INITIAL_STATE = {
     name: '',
@@ -12,6 +12,8 @@ export default (state = INITIAL_STATE, action) => {
             //key interpolation
             return { ...state, [action.prop]: action.value }
         case EMPLOYEE_CREATE:
+            return INITIAL_STATE;
+        case EMPLOYEE_SAVE_SUCCESS:
             return INITIAL_STATE;
         default:
             return state;
